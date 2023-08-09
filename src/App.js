@@ -9,14 +9,18 @@ const App = () => {
   };
   const listOfItems = () => {
     setItems((oldItems) => {
-      return [...oldItems, inputList];
+      const allInputData = {
+        id: new Date().getTime().toString(),
+        name: inputList,
+      };
+      return [...oldItems, allInputData];
     });
     setInputList("");
   };
-  const deleteItems = (id) => {
+  const deleteItems = (index) => {
     setItems((e) => {
-      return e.filter((arrElm, index) => {
-        return index !== id;
+      return e.filter((arrElm) => {
+        return index !== arrElm.id;
       });
     });
   };
@@ -35,11 +39,10 @@ const App = () => {
         <button onClick={listOfItems}>+</button>
         <ul>
           {/* <li>{inputList}</li> */}
-          {items.map((itemsVal, index) => {
+          {items.map((itemsVal) => {
             return (
               <ToDoList
-                key={index}
-                id={index}
+                key={itemsVal.id}
                 text={itemsVal}
                 onDelete={deleteItems}
               />
