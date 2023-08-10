@@ -4,9 +4,6 @@ const App = () => {
   const [inputList, setInputList] = useState("");
   const [items, setItems] = useState([]);
 
-  const itemEvent = (e) => {
-    setInputList(e.target.value);
-  };
   const listOfItems = () => {
     setItems((oldItems) => {
       const allInputData = {
@@ -17,19 +14,23 @@ const App = () => {
     });
     setInputList("");
   };
-  const deleteItems = (index) => {
-    setItems((e) => {
-      return e.filter((arrElm) => {
-        return index !== arrElm.id;
-      });
-    });
+  // const deleteItems = (index) => {
+  //   setItems((e) => {
+  //     return e.filter((arrElm) => {
+  //       return index !== arrElm.id;
+  //     });
+  //   });
+  // };
+  const deleteItems = (id) => {
+    const taskCopy = [...items];
+    taskCopy.splice(id, 1);
+    setItems(taskCopy);
   };
-
-  const editItem = (id) => {
-    let newEditItems = items.find((elem) => {
-      return elem.id === id;
-    });
-  };
+  // const editItem = (id) => {
+  //   let newEditItems = items.find((elem) => {
+  //     return elem.id === id;
+  //   });
+  // };
   const clearItem = () => {
     setItems([]);
   };
@@ -43,18 +44,18 @@ const App = () => {
           value={inputList}
           type="text"
           placeholder="Add a Items"
-          onChange={itemEvent}
+          onChange={(e) => setInputList(e.target.value)}
         />
         <button onClick={listOfItems}>+</button>
         <ul>
           {/* <li>{inputList}</li> */}
-          {items.map((itemsVal) => {
+          {items.map((itemsVal, id) => {
             return (
               <ToDoList
                 key={itemsVal.id}
+                id={id}
                 text={itemsVal}
                 onDelete={deleteItems}
-                onEdit={editItem}
               />
             );
           })}
