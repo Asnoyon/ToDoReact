@@ -24,6 +24,15 @@ const App = () => {
       });
     });
   };
+
+  const editItem = (id) => {
+    let newEditItems = items.find((elem) => {
+      return elem.id === id;
+    });
+  };
+  const clearItem = () => {
+    setItems([]);
+  };
   return (
     <div className="main_div">
       <div className="center_div">
@@ -45,10 +54,12 @@ const App = () => {
                 key={itemsVal.id}
                 text={itemsVal}
                 onDelete={deleteItems}
+                onEdit={editItem}
               />
             );
           })}
         </ul>
+        <button onClick={clearItem}>Clear All</button>
       </div>
     </div>
   );
